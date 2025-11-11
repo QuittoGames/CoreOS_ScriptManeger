@@ -4,10 +4,11 @@ import asyncio
 import psutil
 import os
 from time import sleep
+import asyncio
 
-def run(load: "Loader"):
+async def run(load: "Loader"):
     for i in load.LoadeadScritps:
-        load.runApp(i.getPath())
+        asyncio.create_task(load.runApp(i.getPath()))
         
 def main() -> None :
     tool.clear_screen()
@@ -21,4 +22,4 @@ if __name__ == "__main__":
     main()
     load = Loader()
     load.init()
-    run(load)
+    asyncio.run(run(load))
