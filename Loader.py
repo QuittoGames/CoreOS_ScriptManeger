@@ -27,7 +27,15 @@ class Loader:
     @staticmethod
     def runApp(PathLocal:Path):
         try:
-            subprocess.Popen(str(PathLocal), shell=False)
+            PathLocal = Path(PathLocal)
+            if str(PathLocal.suffix.lower()) == ".ps1":
+                subprocess.Popen([
+                    r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
+                    "-ExecutionPolicy", "Bypass",
+                    "-File", str(PathLocal)
+                ])
+            else:
+                subprocess.Popen(str(PathLocal), shell=False)
             print(f"[INFO] Executando: {PathLocal}")
         except Exception as e:
             print(f"[ERRO] Falha ao executar '{PathLocal}'. Erro: {e}")
