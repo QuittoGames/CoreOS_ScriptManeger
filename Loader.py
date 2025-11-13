@@ -7,7 +7,7 @@ import subprocess
 @dataclass
 class Loader:
     LoadeadScritps: list[Script] = field(default_factory=list)
-    dataJsonPath:Path = Path(r"C:\\Users\\Quitto\\AppData\\Roaming\\ScriptManeger\\data.json")
+    dataJsonPath:Path = Path(r"C:\\Users\\gustavoquitto-ieg\\AppData\\Roaming\\ScriptManeger\\data.json")
 
     def init(self) -> bool:
         dataJson = tool.loadJson(self.dataJsonPath)
@@ -25,7 +25,7 @@ class Loader:
         return True
 
     @staticmethod
-    def runApp(PathLocal:Path):
+    async def runApp(path_local: Path):
         try:
             PathLocal = Path(PathLocal)
             if str(PathLocal.suffix.lower()) == ".ps1":
@@ -38,4 +38,4 @@ class Loader:
                 subprocess.Popen(str(PathLocal), shell=False)
             print(f"[INFO] Executando: {PathLocal}")
         except Exception as e:
-            print(f"[ERRO] Falha ao executar '{PathLocal}'. Erro: {e}")
+            print(f"[ERRO] Falha ao executar '{path_local}'. Erro: {e}")
