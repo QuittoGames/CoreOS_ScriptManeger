@@ -27,12 +27,16 @@ class Loader:
     @staticmethod
     async def runApp(path_local: Path):
         try:
-            PathLocal = Path(PathLocal)
+            PathLocal = Path(path_local)
             if str(PathLocal.suffix.lower()) == ".ps1":
                 subprocess.Popen([
                     r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
                     "-ExecutionPolicy", "Bypass",
                     "-File", str(PathLocal)
+                ])
+            elif str(PathLocal.suffix.lower()) == ".py":
+                subprocess.Popen([
+                    "python", str(PathLocal)
                 ])
             else:
                 subprocess.Popen(str(PathLocal), shell=False)
