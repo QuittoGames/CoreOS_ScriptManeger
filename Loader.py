@@ -27,35 +27,15 @@ class Loader:
     @staticmethod
     async def runApp(path_local: Path):
         try:
-            path_local = Path(path_local)
-            ext = path_local.suffix.lower()
-
-            if ext == ".exe":
-                subprocess.Popen(str(path_local), shell=False)
-
-            elif ext == ".ps1":  # PowerShell
+            PathLocal = Path(PathLocal)
+            if str(PathLocal.suffix.lower()) == ".ps1":
                 subprocess.Popen([
-                    "powershell.exe",
+                    r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
                     "-ExecutionPolicy", "Bypass",
-                    "-File", str(path_local)
-                ], shell=False)
-
-            elif ext == ".py":  # Python script
-                subprocess.Popen([
-                    "python",
-                    str(path_local)
-                ], shell=False)
-
-            elif ext == ".bat":  # Batch
-                subprocess.Popen([
-                    "start cmd.exe", "/c", str(path_local)
-                ], shell=True)
-
+                    "-File", str(PathLocal)
+                ])
             else:
-                print(f"[ERRO] Extensão não reconhecida: {ext}")
-                return
-
-            print(f"[INFO] Executando: {path_local}")
-
+                subprocess.Popen(str(PathLocal), shell=False)
+            print(f"[INFO] Executando: {PathLocal}")
         except Exception as e:
             print(f"[ERRO] Falha ao executar '{path_local}'. Erro: {e}")

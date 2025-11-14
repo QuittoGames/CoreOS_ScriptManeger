@@ -7,9 +7,9 @@ class Script:
     id: int = 0
     scriptPath: Path | None = None
 
-    def getID(self): return self.id
-    def getName(self): return self.name
-    def getPath(self): return self.scriptPath
+    def getID(self) -> int: return self.id
+    def getName(self) -> str: return self.name
+    def getPath(self) -> Path: return self.scriptPath
 
     def setName(self, name: str): self.name = name
     def setPath(self, scriptPath: Path): self.scriptPath = scriptPath
