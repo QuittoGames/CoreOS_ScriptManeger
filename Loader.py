@@ -3,11 +3,12 @@ from pathlib import Path
 from tool import tool
 from modules.Script import Script
 import subprocess
+import os
 
 @dataclass
 class Loader:
     LoadeadScritps: list[Script] = field(default_factory=list)
-    dataJsonPath:Path = Path(r"C:\\Users\\gustavoquitto-ieg\\AppData\\Roaming\\ScriptManeger\\data.json")
+    dataJsonPath = Path(os.getenv("APPDATA")) / "ScriptManeger" / "data.json"
 
     def init(self) -> bool:
         dataJson = tool.loadJson(self.dataJsonPath)
@@ -28,18 +29,19 @@ class Loader:
     async def runApp(path_local: Path):
         try:
             PathLocal = Path(path_local)
+
             if str(PathLocal.suffix.lower()) == ".ps1":
                 subprocess.Popen([
                     r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
                     "-ExecutionPolicy", "Bypass",
-                    "-File", str(PathLocal)
+                    "-File", PathLocal.absolute()
                 ])
             elif str(PathLocal.suffix.lower()) == ".py":
                 subprocess.Popen([
-                    "python", str(PathLocal)
+                    "python", PathLocal.absolute()
                 ])
             else:
-                subprocess.Popen(str(PathLocal), shell=False)
+                subprocess.Popen(PathLocal.absolute(), shell=False)
             print(f"[INFO] Executando: {PathLocal}")
         except Exception as e:
             print(f"[ERRO] Falha ao executar '{path_local}'. Erro: {e}")
