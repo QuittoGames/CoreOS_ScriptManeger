@@ -30,15 +30,19 @@ class Loader:
         try:
             PathLocal = Path(path_local)
 
-            if str(PathLocal.suffix.lower()) == ".ps1":
+            if PathLocal.suffix.lower() == ".ps1":
                 subprocess.Popen([
                     r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
                     "-ExecutionPolicy", "Bypass",
                     "-File", PathLocal.absolute()
                 ])
-            elif str(PathLocal.suffix.lower()) == ".py":
+            elif PathLocal.suffix.lower() == ".py":
                 subprocess.Popen([
                     "python", PathLocal.absolute()
+                ])
+            elif PathLocal.suffix.lower() == ".vbs":
+                subprocess.Popen([
+                    "wscript" , PathLocal.absolute()
                 ])
             else:
                 subprocess.Popen(PathLocal.absolute(), shell=False)
